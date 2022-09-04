@@ -1,22 +1,21 @@
 import { Configuration } from 'webpack'
-import { PATHS } from '../../constants'
 import path from 'path'
 import nodeExternals from 'webpack-node-externals'
+import { PATHS } from '../../constants'
 import { COMPILERS_NAME } from './constants'
+import { moduleCssLoaderServer, svgLoaderServer } from '../loaders'
+import { _dev } from './ustils'
 
 const config: Configuration = {
   name: COMPILERS_NAME.SERVER,
   mode: 'development',
   devtool: 'source-map',
   entry: path.resolve(PATHS.SRC_SERVER, 'index.tsx'),
-  externals: [
-    nodeExternals(     ),
-  ],
+  externals: [nodeExternals()],
   output: {
     path: PATHS.SERVER_BUILD,
     filename: 'server.js',
-    publicPath: 'http://localhost:8501/static/',
-    // libraryTarget: 'commonjs2',
+    publicPath: `${process.env.HMR_HOST}:${process.env.HMR_PORT}/static/`,
   },
   module: {
     rules: [
@@ -25,14 +24,12 @@ const config: Configuration = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
+      moduleCssLoaderServer(_dev),
+      svgLoaderServer,
     ],
   },
   resolve: {
     extensions: ['.ts', '.tsx'],
-    // alias: {
-    //   react: require.resolve('react'),
-    //   'react-dom/client': require.resolve('react-dom/client'),
-    // },
   },
   stats: {
     assets: false,

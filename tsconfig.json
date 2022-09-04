@@ -10,7 +10,7 @@
         "jsx": "react",
         "lib": [
             "es2020",
-            "dom",
+            "dom"
         ],
         "module": "CommonJS",
         "moduleResolution": "node",
@@ -18,7 +18,8 @@
         "skipLibCheck": true,
         "sourceMap": true,
         "strict": true,
-        "target": "es5"
+        "target": "es5",
+        "paths": {}
     },
     "exclude": [
         "node_modules"

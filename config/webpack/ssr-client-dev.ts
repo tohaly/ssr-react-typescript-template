@@ -2,7 +2,13 @@ import path from 'path'
 import webpack, { Configuration } from 'webpack'
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'
 import { PATHS } from '../../constants'
-import { COMPILERS_NAME, HMR_HOST, HMR_PORT } from './constants'
+import { COMPILERS_NAME } from './constants'
+import { moduleCssLoaderClient, svgLoaderClient } from '../loaders'
+import { _dev } from './ustils'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+
+const HMR_HOST = process.env.HMR_HOST
+const HMR_PORT = process.env.HMR_PORT
 
 const config: Configuration = {
   name: COMPILERS_NAME.CLIENT,
@@ -11,7 +17,7 @@ const config: Configuration = {
   output: {
     path: path.join(PATHS.CLIENT_BUILD, PATHS.PUBLIC_PATH),
     filename: 'bundle.js',
-    publicPath: `${HMR_HOST}:${HMR_PORT}/${PATHS.PUBLIC_PATH}`,
+    publicPath: `${HMR_HOST}:${HMR_PORT}${PATHS.PUBLIC_PATH}`,
     chunkFilename: '[name].[chunkhash:8].chunk.js',
     hotUpdateMainFilename: 'updates/[fullhash].hot-update.json',
     hotUpdateChunkFilename: 'updates/[id].[fullhash].hot-update.js',
@@ -35,6 +41,8 @@ const config: Configuration = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
+      moduleCssLoaderClient(_dev),
+      ...svgLoaderClient,
     ],
   },
   resolve: {
@@ -46,6 +54,7 @@ const config: Configuration = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new MiniCssExtractPlugin({ filename: '[name].css' }),
     new ReactRefreshWebpackPlugin({
       overlay: {
         sockIntegration: 'whm',

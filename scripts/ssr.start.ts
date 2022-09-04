@@ -1,9 +1,9 @@
+import fs from 'fs'
 import webpack from 'webpack'
 import express from 'express'
 import nodemon from 'nodemon'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
-import dotenv from 'dotenv'
 import { dotEnv } from '../utils'
 
 dotEnv()
@@ -11,17 +11,18 @@ dotEnv()
 import clientConfig from '../config/webpack/ssr-client-dev'
 import serverConfig from '../config/webpack/ssr-server-dev'
 import { asyncCompiler, findCompilerByName } from '../utils'
-import { logMessage } from '../utils/logMessage'
+import { logMessage } from '../utils'
 import { COMPILERS_NAME } from '../config/webpack/constants'
 import { PATHS } from '../constants'
 
+const WEBPACK_PORT = process.env.HMR_PORT || 3001
 
-
-const WEBPACK_PORT = process.env.WEBPACK_PORT || 3001
 const app = express()
 
 const start = async (): Promise<void> => {
-  const publicPath = clientConfig.output?.publicPath
+  if (fs.existsSync(PATHS.ROOT_BUILD)) {
+    fs.rmSync(PATHS.ROOT_BUILD, { recursive: true })
+  }
 
   const multiCompiler = webpack([serverConfig, clientConfig])
 

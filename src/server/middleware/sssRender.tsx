@@ -7,7 +7,7 @@ import { App } from '../../client/components/App'
 export const sssRender =
   () =>
   (req: Request, res: Response): Response => {
-    const cssScripts: string[] = []
+    const cssScripts: string[] = ['http://localhost:8501/static/main.css']
     const jsScripts = ['http://localhost:8501/static/bundle.js', 'http://localhost:8501/static/vendor.js']
     const appMarkup = renderToString(<App />)
     const html = renderToString(<Html cssScripts={cssScripts} jsScripts={jsScripts} innerHtml={appMarkup} />)

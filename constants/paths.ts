@@ -11,4 +11,5 @@ export const PATHS = {
   APP_HTML: resolvePath('src/client/template.html'),
   SRC_SERVER: resolvePath('src/server'),
   SERVER_BUILD: resolvePath('build/server'),
+  ROOT_BUILD: resolvePath('/build'),
 } as const
