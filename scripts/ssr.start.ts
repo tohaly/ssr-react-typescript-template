@@ -1,20 +1,23 @@
 import webpack from 'webpack'
+import express from 'express'
+import nodemon from 'nodemon'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
+import dotenv from 'dotenv'
+import { dotEnv } from '../utils'
+
+dotEnv()
+
 import clientConfig from '../config/webpack/ssr-client-dev'
 import serverConfig from '../config/webpack/ssr-server-dev'
-import { asyncCompiler, findCompilerByName } from '../utils/AsyncCompiler'
+import { asyncCompiler, findCompilerByName } from '../utils'
 import { logMessage } from '../utils/logMessage'
 import { COMPILERS_NAME } from '../config/webpack/constants'
-import express from 'express'
-import { paths } from '../config/paths'
-import nodemon from 'nodemon'
+import { PATHS } from '../constants'
 
-const WEBPACK_PORT =
-  process.env.WEBPACK_PORT || (!isNaN(Number(process.env.PORT)) ? Number(process.env.PORT) + 1 : 8501)
 
-// const DEVSERVER_HOST = process.env.DEVSERVER_HOST || 'http://localhost'
 
+const WEBPACK_PORT = process.env.WEBPACK_PORT || 3001
 const app = express()
 
 const start = async (): Promise<void> => {
@@ -67,7 +70,7 @@ const start = async (): Promise<void> => {
   })
 
   app.use(webpackHotMiddleware(clientCompiler))
-  app.use('/static', express.static(paths.clientBuild))
+  app.use('/static', express.static(PATHS.CLIENT_BUILD))
   app.listen(WEBPACK_PORT)
 
   try {
@@ -80,8 +83,8 @@ const start = async (): Promise<void> => {
   }
 
   const script = nodemon({
-    script: `${paths.serverBuild}/server.js`,
-    ignore: ['src', 'scripts', 'config', './*.*', 'build/client', '**/locales', '**/tmp'],
+    script: `${PATHS.SERVER_BUILD}/server.js`,
+    ignore: ['src', 'scripts', 'config', './*.*', 'build/client'],
     delay: 200,
   })
 
@@ -100,4 +103,4 @@ const start = async (): Promise<void> => {
   })
 }
 
-start().then(() => logMessage('then'))
+start()

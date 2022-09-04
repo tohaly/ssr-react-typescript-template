@@ -1,19 +1,17 @@
 import path from 'path'
 import webpack, { Configuration } from 'webpack'
-// import TerserPlugin from 'terser-webpack-plugin'
-// import WriteFileWebpackPlugin from 'write-file-webpack-plugin'
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'
-import { paths } from '../paths'
-import { COMPILERS_NAME } from './constants'
+import { PATHS } from '../../constants'
+import { COMPILERS_NAME, HMR_HOST, HMR_PORT } from './constants'
 
 const config: Configuration = {
   name: COMPILERS_NAME.CLIENT,
   mode: 'development',
-  entry: [`webpack-hot-middleware/client?path=http://localhost:8501/__webpack_hmr`, paths.srcClient],
+  entry: [`webpack-hot-middleware/client?path=${HMR_HOST}:${HMR_PORT}/__webpack_hmr`, PATHS.SRC_CLIENT],
   output: {
-    path: path.join(paths.clientBuild, paths.publicPath),
+    path: path.join(PATHS.CLIENT_BUILD, PATHS.PUBLIC_PATH),
     filename: 'bundle.js',
-    publicPath: 'http://localhost:8501/static/',
+    publicPath: `${HMR_HOST}:${HMR_PORT}/${PATHS.PUBLIC_PATH}`,
     chunkFilename: '[name].[chunkhash:8].chunk.js',
     hotUpdateMainFilename: 'updates/[fullhash].hot-update.json',
     hotUpdateChunkFilename: 'updates/[id].[fullhash].hot-update.js',
@@ -23,7 +21,7 @@ const config: Configuration = {
     splitChunks: {
       cacheGroups: {
         commons: {
-          test: /[\\/]node_modules[\\/]/,
+          test: /node_modules/,
           filename: 'vendor.js',
           chunks: 'all',
         },
@@ -47,15 +45,12 @@ const config: Configuration = {
     },
   },
   plugins: [
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    // new WriteFileWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    // new ReactRefreshWebpackPlugin({
-    //   overlay: {
-    //     sockIntegration: 'whm',
-    //   },
-    // }),
+    new ReactRefreshWebpackPlugin({
+      overlay: {
+        sockIntegration: 'whm',
+      },
+    }),
   ],
 
   stats: {
