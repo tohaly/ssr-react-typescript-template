@@ -3,7 +3,7 @@ import webpack, { Configuration } from 'webpack'
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'
 import { PATHS } from '../../constants'
 import { COMPILERS_NAME } from './constants'
-import { moduleCssLoaderClient, svgLoaderClient } from '../loaders'
+import { imageLoaderClient, moduleCssLoaderClient, svgLoaderClient } from '../loaders'
 import { _dev } from './ustils'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
@@ -43,6 +43,7 @@ const config: Configuration = {
       },
       moduleCssLoaderClient(_dev),
       ...svgLoaderClient,
+      imageLoaderClient,
     ],
   },
   resolve: {

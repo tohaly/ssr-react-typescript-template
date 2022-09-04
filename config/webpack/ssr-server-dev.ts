@@ -3,7 +3,7 @@ import path from 'path'
 import nodeExternals from 'webpack-node-externals'
 import { PATHS } from '../../constants'
 import { COMPILERS_NAME } from './constants'
-import { moduleCssLoaderServer, svgLoaderServer } from '../loaders'
+import { imageLoaderServer, moduleCssLoaderServer, svgLoaderServer } from '../loaders'
 import { _dev } from './ustils'
 
 const config: Configuration = {
@@ -26,6 +26,7 @@ const config: Configuration = {
       },
       moduleCssLoaderServer(_dev),
       svgLoaderServer,
+      imageLoaderServer,
     ],
   },
   resolve: {
