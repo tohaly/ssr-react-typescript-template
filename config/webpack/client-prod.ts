@@ -1,27 +1,21 @@
 import path from 'path'
-import webpack, { Configuration } from 'webpack'
-import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'
+import { Configuration } from 'webpack'
 import { PATHS } from '../../constants'
 import { COMPILERS_NAME } from './constants'
 import { imageLoaderClient, moduleCssLoaderClient, svgLoaderClient } from '../loaders'
-import { _dev } from './ustils'
+import { _prod } from './ustils'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import { fontLoaderClient } from '../loaders/fontLoaders'
-
-const HMR_HOST = process.env.HMR_HOST
-const HMR_PORT = process.env.HMR_PORT
+import { CleanWebpackPlugin } from 'clean-webpack-plugin'
 
 const config: Configuration = {
   name: COMPILERS_NAME.CLIENT,
-  mode: 'development',
-  entry: [`webpack-hot-middleware/client?path=${HMR_HOST}:${HMR_PORT}/__webpack_hmr`, PATHS.SRC_CLIENT],
+  mode: 'production',
+  entry: PATHS.SRC_CLIENT,
   output: {
     path: path.join(PATHS.CLIENT_BUILD, PATHS.PUBLIC_PATH),
     filename: 'bundle.js',
-    publicPath: `${HMR_HOST}:${HMR_PORT}${PATHS.PUBLIC_PATH}`,
-    chunkFilename: '[name].[chunkhash:8].chunk.js',
-    hotUpdateMainFilename: 'updates/[fullhash].hot-update.json',
-    hotUpdateChunkFilename: 'updates/[id].[fullhash].hot-update.js',
+    publicPath: `/`,
   },
   optimization: {
     emitOnErrors: true,
@@ -42,7 +36,7 @@ const config: Configuration = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
-      moduleCssLoaderClient(_dev),
+      moduleCssLoaderClient(_prod),
       ...svgLoaderClient,
       imageLoaderClient,
       fontLoaderClient,
@@ -55,16 +49,7 @@ const config: Configuration = {
       'react-dom/client': require.resolve('react-dom/client'),
     },
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new MiniCssExtractPlugin({ filename: '[name].css' }),
-    new ReactRefreshWebpackPlugin({
-      overlay: {
-        sockIntegration: 'whm',
-      },
-    }),
-  ],
-
+  plugins: [new MiniCssExtractPlugin({ filename: '[name].css' }), new CleanWebpackPlugin()],
   stats: {
     cached: false,
     cachedAssets: false,
@@ -78,10 +63,7 @@ const config: Configuration = {
     timings: true,
     version: false,
   },
-  devtool: 'source-map',
-  performance: {
-    hints: false,
-  },
+  devtool: false,
 }
 
 export default config

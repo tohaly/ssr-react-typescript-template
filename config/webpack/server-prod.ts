@@ -4,19 +4,19 @@ import nodeExternals from 'webpack-node-externals'
 import { PATHS } from '../../constants'
 import { COMPILERS_NAME } from './constants'
 import { imageLoaderServer, moduleCssLoaderServer, svgLoaderServer } from '../loaders'
-import { _dev } from './ustils'
+import { _prod } from './ustils'
 import { fontLoaderServer } from '../loaders/fontLoaders'
 
 const config: Configuration = {
   name: COMPILERS_NAME.SERVER,
-  mode: 'development',
-  devtool: 'source-map',
+  mode: 'production',
+  devtool: false,
   entry: path.resolve(PATHS.SRC_SERVER, 'index.tsx'),
   externals: [nodeExternals()],
   output: {
     path: PATHS.SERVER_BUILD,
     filename: 'server.js',
-    publicPath: `${process.env.HMR_HOST}:${process.env.HMR_PORT}/static/`,
+    publicPath: PATHS.PUBLIC_PATH,
   },
   module: {
     rules: [
@@ -25,14 +25,14 @@ const config: Configuration = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
-      moduleCssLoaderServer(_dev),
+      moduleCssLoaderServer(_prod),
       svgLoaderServer,
       imageLoaderServer,
       fontLoaderServer,
     ],
   },
   resolve: {
-    extensions: ['.ts', '.tsx'],
+    extensions: ['.ts', '.tsx', '.js'],
   },
   stats: {
     assets: false,
@@ -50,9 +50,6 @@ const config: Configuration = {
     version: false,
   },
   target: 'node',
-  performance: {
-    hints: false,
-  },
 }
 
 export default config

@@ -7,8 +7,11 @@ import { App } from '../../client/components/App'
 export const sssRender =
   () =>
   (req: Request, res: Response): Response => {
-    const cssScripts: string[] = ['http://localhost:8501/static/main.css']
-    const jsScripts = ['http://localhost:8501/static/bundle.js', 'http://localhost:8501/static/vendor.js']
+    const port = process.env.HMR_PORT ? `:${process.env.HMR_PORT}` : ''
+    const staticPath = !process.env.HMR_HOST ? '/static/' : `${process.env.HMR_HOST}${port}/static/`
+
+    const cssScripts: string[] = [`${staticPath}main.css`]
+    const jsScripts: string[] = [`${staticPath}bundle.js`, `${staticPath}vendor.js`]
     const appMarkup = renderToString(<App />)
     const html = renderToString(<Html cssScripts={cssScripts} jsScripts={jsScripts} innerHtml={appMarkup} />)
     const htmlMarker = '<!doctype html>'

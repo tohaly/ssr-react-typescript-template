@@ -25,9 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(sssRender())
 
-app.listen(process.env.PORT || 8500, () => {
-  console.log(
-    `[${new Date().toISOString()}]`,
-    chalk.blue(`App is running: http://localhost:${process.env.PORT || 8500}`),
-  )
+const port = process.env.PORT || 3000
+app.listen(port, () => {
+  console.log(`[${new Date().toISOString()}]`, chalk.blue(`App is running: http://localhost:${port}`))
 })

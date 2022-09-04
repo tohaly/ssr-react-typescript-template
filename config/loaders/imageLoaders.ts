@@ -14,10 +14,6 @@ export const svgLoaderClient: RuleSetRule[] = [
     issuer: /\.[jt]sx?$/,
     resourceQuery: { not: [/url/] },
     loader: '@svgr/webpack',
-    options: {
-      typescript: true,
-      ext: 'tsx',
-    },
   },
 ]
 
