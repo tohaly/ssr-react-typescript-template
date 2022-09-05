@@ -1,11 +1,10 @@
 import { Configuration } from 'webpack'
 import path from 'path'
 import nodeExternals from 'webpack-node-externals'
+import { _dev } from '../utils'
 import { PATHS } from '../../constants'
 import { COMPILERS_NAME } from './constants'
-import { imageLoaderServer, moduleCssLoaderServer, svgLoaderServer } from '../loaders'
-import { _dev } from './ustils'
-import { fontLoaderServer } from '../loaders/fontLoaders'
+import { imageLoaderServer, moduleCssLoaderServer, svgLoaderServer, tsLoaderServer, fontLoaderServer } from '../loaders'
 
 const config: Configuration = {
   name: COMPILERS_NAME.SERVER,
@@ -19,17 +18,7 @@ const config: Configuration = {
     publicPath: `${process.env.HMR_HOST}:${process.env.HMR_PORT}/static/`,
   },
   module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-      moduleCssLoaderServer(_dev),
-      svgLoaderServer,
-      imageLoaderServer,
-      fontLoaderServer,
-    ],
+    rules: [tsLoaderServer, moduleCssLoaderServer(_dev), svgLoaderServer, imageLoaderServer, fontLoaderServer],
   },
   resolve: {
     extensions: ['.ts', '.tsx'],

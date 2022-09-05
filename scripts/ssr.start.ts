@@ -8,8 +8,8 @@ import { dotEnv } from '../utils'
 
 dotEnv()
 
-import clientConfig from '../config/webpack/ssr-client-dev'
-import serverConfig from '../config/webpack/ssr-server-dev'
+import clientConfig from '../config/webpack/client-dev'
+import serverConfig from '../config/webpack/server-dev'
 import { asyncCompiler, findCompilerByName } from '../utils'
 import { logMessage } from '../utils'
 import { COMPILERS_NAME } from '../config/webpack/constants'

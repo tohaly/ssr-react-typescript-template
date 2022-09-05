@@ -3,9 +3,8 @@ import path from 'path'
 import nodeExternals from 'webpack-node-externals'
 import { PATHS } from '../../constants'
 import { COMPILERS_NAME } from './constants'
-import { imageLoaderServer, moduleCssLoaderServer, svgLoaderServer } from '../loaders'
-import { _prod } from './ustils'
-import { fontLoaderServer } from '../loaders/fontLoaders'
+import { imageLoaderServer, moduleCssLoaderServer, svgLoaderServer, tsLoaderServer, fontLoaderServer } from '../loaders'
+import { _prod } from '../utils'
 
 const config: Configuration = {
   name: COMPILERS_NAME.SERVER,
@@ -19,17 +18,7 @@ const config: Configuration = {
     publicPath: PATHS.PUBLIC_PATH,
   },
   module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-      moduleCssLoaderServer(_prod),
-      svgLoaderServer,
-      imageLoaderServer,
-      fontLoaderServer,
-    ],
+    rules: [tsLoaderServer, moduleCssLoaderServer(_prod), svgLoaderServer, imageLoaderServer, fontLoaderServer],
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],

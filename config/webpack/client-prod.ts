@@ -2,10 +2,9 @@ import path from 'path'
 import { Configuration } from 'webpack'
 import { PATHS } from '../../constants'
 import { COMPILERS_NAME } from './constants'
-import { imageLoaderClient, moduleCssLoaderClient, svgLoaderClient } from '../loaders'
-import { _prod } from './ustils'
+import { imageLoaderClient, moduleCssLoaderClient, svgLoaderClient, tsLoaderClient, fontLoaderClient } from '../loaders'
+import { _prod } from '../utils'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import { fontLoaderClient } from '../loaders/fontLoaders'
 import { CleanWebpackPlugin } from 'clean-webpack-plugin'
 
 const config: Configuration = {
@@ -30,17 +29,7 @@ const config: Configuration = {
     },
   },
   module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-      moduleCssLoaderClient(_prod),
-      ...svgLoaderClient,
-      imageLoaderClient,
-      fontLoaderClient,
-    ],
+    rules: [tsLoaderClient, moduleCssLoaderClient(_prod), ...svgLoaderClient, imageLoaderClient, fontLoaderClient],
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],

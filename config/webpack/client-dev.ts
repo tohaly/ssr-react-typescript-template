@@ -1,12 +1,11 @@
 import path from 'path'
 import webpack, { Configuration } from 'webpack'
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import { PATHS } from '../../constants'
 import { COMPILERS_NAME } from './constants'
-import { imageLoaderClient, moduleCssLoaderClient, svgLoaderClient } from '../loaders'
-import { _dev } from './ustils'
-import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import { fontLoaderClient } from '../loaders/fontLoaders'
+import { imageLoaderClient, moduleCssLoaderClient, svgLoaderClient, fontLoaderClient } from '../loaders'
+import { _dev } from '../utils'
 
 const HMR_HOST = process.env.HMR_HOST
 const HMR_PORT = process.env.HMR_PORT
@@ -36,17 +35,7 @@ const config: Configuration = {
     },
   },
   module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-      moduleCssLoaderClient(_dev),
-      ...svgLoaderClient,
-      imageLoaderClient,
-      fontLoaderClient,
-    ],
+    rules: [fontLoaderClient, moduleCssLoaderClient(_dev), ...svgLoaderClient, imageLoaderClient, fontLoaderClient],
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
