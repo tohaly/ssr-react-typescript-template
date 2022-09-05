@@ -1,4 +1,8 @@
 .app {
-    color: red;
-    background: url("./server.svg");
+  color: red;
+  background: url("./server.svg");
+
+  &:hover {
+    color: #fff;
+  }
 }
