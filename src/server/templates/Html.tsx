@@ -10,6 +10,7 @@ export const Html: React.FC<React.PropsWithChildren<Props>> = ({ cssScripts, jsS
   return (
     <html lang='ru'>
       <head>
+        <title>SSR APP</title>
         <meta charSet='utf-8' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         {cssScripts.filter(Boolean).map((href) => (

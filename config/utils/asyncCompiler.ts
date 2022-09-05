@@ -27,14 +27,14 @@ export const asyncCompiler = (compiler: Compiler, name: string, disableCustomCom
         return
       }
 
-      const successCompilerText = `Compiled successfully [${name}]`
+      const successCompilerText = `Compiled successfully [${name}] more info ↓`
 
-      logMessage(successCompilerText)
+      logMessage(successCompilerText, 'success')
       resolve(successCompilerText)
     })
 
     compiler.hooks.compile.tap(name, () => {
-      logMessage(`Compile [${name}]`)
+      logMessage(`Start compile [${name}]`)
     })
     //TODO remove this legacy code
     if (!disableCustomCompile) {

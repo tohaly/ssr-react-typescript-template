@@ -37,5 +37,6 @@
         "react/jsx-key": ["error", {
             "warnOnDuplicates": true
         }]
-    }
+    },
+    "ignorePatterns": ["buld/**/*"]
 }
