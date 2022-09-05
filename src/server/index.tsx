@@ -4,7 +4,7 @@ import path from 'path'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import chalk from 'chalk'
-import { dotEnv } from '../../utils'
+import { dotEnv } from '../../config/utils'
 
 dotEnv()
 
@@ -26,6 +26,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(sssRender())
 
 const port = process.env.PORT || 3000
+
 app.listen(port, () => {
+  // eslint-disable-next-line no-console
   console.log(`[${new Date().toISOString()}]`, chalk.blue(`App is running: http://localhost:${port}`))
 })

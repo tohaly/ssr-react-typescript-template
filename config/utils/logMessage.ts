@@ -9,5 +9,6 @@ export const logMessage = (message: string, level: MessageLevels = 'info'): void
   })
 
   const color = level === 'error' ? 'red' : level === 'warning' ? 'yellow' : level === 'info' ? 'blue' : 'white'
+  // eslint-disable-next-line no-console
   console.log(`[${time}]`, chalk[color](message))
 }

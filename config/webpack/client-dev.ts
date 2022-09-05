@@ -4,7 +4,7 @@ import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import { PATHS } from '../../constants'
 import { COMPILERS_NAME } from './constants'
-import { imageLoaderClient, moduleCssLoaderClient, svgLoaderClient, fontLoaderClient } from '../loaders'
+import { imageLoaderClient, moduleCssLoaderClient, svgLoaderClient, fontLoaderClient, tsLoaderClient } from '../loaders'
 import { _dev } from '../utils'
 
 const HMR_HOST = process.env.HMR_HOST
@@ -35,7 +35,7 @@ const config: Configuration = {
     },
   },
   module: {
-    rules: [fontLoaderClient, moduleCssLoaderClient(_dev), ...svgLoaderClient, imageLoaderClient, fontLoaderClient],
+    rules: [tsLoaderClient, moduleCssLoaderClient(_dev), ...svgLoaderClient, imageLoaderClient, fontLoaderClient],
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],

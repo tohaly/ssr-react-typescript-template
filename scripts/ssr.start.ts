@@ -4,14 +4,13 @@ import express from 'express'
 import nodemon from 'nodemon'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
-import { dotEnv } from '../utils'
+import { dotEnv } from '../config/utils'
 
 dotEnv()
 
 import clientConfig from '../config/webpack/client-dev'
 import serverConfig from '../config/webpack/server-dev'
-import { asyncCompiler, findCompilerByName } from '../utils'
-import { logMessage } from '../utils'
+import { asyncCompiler, findCompilerByName, logMessage } from '../config/utils'
 import { COMPILERS_NAME } from '../config/webpack/constants'
 import { PATHS } from '../constants'
 
@@ -53,6 +52,7 @@ const start = async (): Promise<void> => {
   //Server compile trigger
   serverCompiler.watch({ ignored: /node_modules/ }, (error, stats) => {
     if (!error && !stats?.hasErrors()) {
+      // eslint-disable-next-line no-console
       console.log(stats?.toString(serverConfig.stats))
       return
     }
@@ -90,7 +90,7 @@ const start = async (): Promise<void> => {
   })
 
   script.on('restart', () => {
-    logMessage('Server side app has been restarted.', 'warning')
+    logMessage('SSR app restart', 'warning')
   })
 
   script.on('quit', () => {
@@ -99,7 +99,7 @@ const start = async (): Promise<void> => {
   })
 
   script.on('error', () => {
-    logMessage('An error occured. Exiting', 'error')
+    logMessage('Exist with error.', 'error')
     process.exit(1)
   })
 }

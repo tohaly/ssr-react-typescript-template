@@ -21,7 +21,7 @@ const config: Configuration = {
     rules: [tsLoaderServer, moduleCssLoaderServer(_dev), svgLoaderServer, imageLoaderServer, fontLoaderServer],
   },
   resolve: {
-    extensions: ['.ts', '.tsx'],
+    extensions: ['.ts', '.tsx', '.js'],
   },
   stats: {
     assets: false,

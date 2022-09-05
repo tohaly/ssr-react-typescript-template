@@ -7,7 +7,8 @@ const container = document.getElementById('app')
 if (container) {
   hydrateRoot(container, <App />)
 } else {
-  console.error('warn container')
+  // eslint-disable-next-line no-console
+  console.error('[Error] App container possible is null or incorrect')
 }
 
 if (module.hot) {
