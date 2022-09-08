@@ -7,17 +7,17 @@ import { COMPILERS_NAME } from './constants'
 import { imageLoaderClient, moduleCssLoaderClient, svgLoaderClient, fontLoaderClient, tsLoaderClient } from '../loaders'
 import { _dev } from '../utils'
 
-const HMR_HOST = process.env.HMR_HOST
-const HMR_PORT = process.env.HMR_PORT
+const WEBPACK_HOST = process.env.WEBPACK_HOST
+const WEBPACK_PORT = process.env.WEBPACK_PORT
 
 const config: Configuration = {
   name: COMPILERS_NAME.CLIENT,
   mode: 'development',
-  entry: [`webpack-hot-middleware/client?path=${HMR_HOST}:${HMR_PORT}/__webpack_hmr`, PATHS.SRC_CLIENT],
+  entry: [`webpack-hot-middleware/client?path=${WEBPACK_HOST}:${WEBPACK_PORT}/__webpack_hmr`, PATHS.SRC_CLIENT],
   output: {
     path: path.join(PATHS.CLIENT_BUILD, PATHS.PUBLIC_PATH),
     filename: 'bundle.js',
-    publicPath: `${HMR_HOST}:${HMR_PORT}${PATHS.PUBLIC_PATH}`,
+    publicPath: `${WEBPACK_HOST}:${WEBPACK_PORT}${PATHS.PUBLIC_PATH}`,
     chunkFilename: '[name].[chunkhash:8].chunk.js',
     hotUpdateMainFilename: 'updates/[fullhash].hot-update.json',
     hotUpdateChunkFilename: 'updates/[id].[fullhash].hot-update.js',

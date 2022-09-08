@@ -24,8 +24,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(sssRender())
 
-const port = process.env.PORT || 3000
+const host = process.env.APP_HOST || 'http://localhost'
+const port = process.env.APP_PORT || 3000
 
 app.listen(port, () => {
-  logMessage(`App is running: http://localhost:${port}`, 'success')
+  logMessage(`App is running: ${host}:${port}`, 'success')
 })

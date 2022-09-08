@@ -4,6 +4,7 @@ import express from 'express'
 import nodemon from 'nodemon'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
+import openBrowser from 'open'
 import { dotEnv } from '../config/utils'
 
 dotEnv()
@@ -14,7 +15,9 @@ import { asyncCompiler, findCompilerByName, logMessage } from '../config/utils'
 import { COMPILERS_NAME } from '../config/webpack/constants'
 import { PATHS } from '../constants'
 
-const WEBPACK_PORT = process.env.HMR_PORT || 3001
+const WEBPACK_PORT = process.env.WEBPACK_PORT || 3001
+const APP_HOST = process.env.APP_HOST || 'http://localhost'
+const APP_PORT = process.env.APP_PORT || 3000
 
 const app = express()
 
@@ -102,6 +105,10 @@ const start = async (): Promise<void> => {
     logMessage('Exist with error.', 'error')
     process.exit(1)
   })
+
+  setTimeout(() => {
+    openBrowser(`${APP_HOST}:${APP_PORT}`).catch((err) => logMessage(err, 'error'))
+  }, 2000)
 }
 
 start()

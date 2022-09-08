@@ -4,7 +4,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 const cssRegexp = /\.css$/
 
 const cssModuleOptions = (isDev: boolean): Record<string, string | boolean> =>
-  isDev ? { localIdentName: '[folder]_[local]-[hash:base64:5]' } : { localIdentName: '[hash:base64:8]' }
+  isDev ? { localIdentName: '[name]_[local]-[hash:base64:5]' } : { localIdentName: '[hash:base64:8]' }
 
 export const moduleCssLoaderServer = (isDev: boolean): RuleSetRule => ({
   test: cssRegexp,
@@ -27,7 +27,7 @@ export const moduleCssLoaderServer = (isDev: boolean): RuleSetRule => ({
 export const moduleCssLoaderClient = (isDev: boolean): RuleSetRule => ({
   test: cssRegexp,
   use: [
-    !isDev && MiniCssExtractPlugin.loader,
+    MiniCssExtractPlugin.loader,
     {
       loader: 'css-loader',
       options: {
@@ -35,7 +35,7 @@ export const moduleCssLoaderClient = (isDev: boolean): RuleSetRule => ({
       },
     },
     {
-      loader: 'postcss-loader',
+      loader: require.resolve('postcss-loader'),
       options: {
         sourceMap: isDev,
       },

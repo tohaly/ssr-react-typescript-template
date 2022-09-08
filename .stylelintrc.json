@@ -5,5 +5,5 @@
         "color-hex-case": "lower",
         "color-hex-length": "short"
     },
-    "ignoreFiles": ["build/**/*"]
+    "ignoreFiles": ["build/**/*.css"]
 }

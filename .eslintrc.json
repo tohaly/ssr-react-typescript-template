@@ -38,5 +38,5 @@
             "warnOnDuplicates": true
         }]
     },
-    "ignorePatterns": ["buld/**/*"]
+    "ignorePatterns": ["buld/**/*.js"]
 }

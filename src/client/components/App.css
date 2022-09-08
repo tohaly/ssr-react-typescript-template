@@ -1,8 +1,25 @@
-.app {
-  color: red;
-  background: url("./server.svg");
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  margin: 0 auto;
+  margin-bottom: 40px;
+}
+
+.icon {
+  width: 180px;
+  margin: 0 auto 40px;
+}
+
+.button {
+  cursor: pointer;
+  padding: 12px 30px;
+  font-size: 20px;
 
   &:hover {
-    color: #fff;
+    background: aqua;
   }
 }
